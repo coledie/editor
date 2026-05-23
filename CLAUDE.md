@@ -125,6 +125,5 @@ This stack removes lighting as a clustering factor at two independent stages (bi
 | Image | Scene | Segmentation challenge |
 |---|---|---|
 | a.jpg | Highway overlook, winter | Sky vs treeline vs road vs rocks all have similar desaturated tones |
-| b.jpg | Sushi plate | Small distinct objects, warm restaurant lighting |
 | c.jpg | Industrial yard from train | Blown-out sky dominates; mid-ground very desaturated |
 | d.jpg | Snoqualmie Falls | Rich greens + misty whites make forest and waterfall hard to separate |

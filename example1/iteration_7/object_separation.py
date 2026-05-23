@@ -16,8 +16,8 @@ import numpy as np
 import cv2
 from scipy.ndimage import median_filter, uniform_filter
 
-DIR_IN  = "C:/Users/coles/Desktop/editor"
-DIR_OUT = "C:/Users/coles/Desktop/editor/iteration_7"
+DIR_IN  = "C:/Users/coles/Desktop/editor/example1"
+DIR_OUT = "C:/Users/coles/Desktop/editor/example1/iteration_7"
 
 # ── segmentation (same as iteration 6) ───────────────────────────────────────
 
@@ -145,22 +145,22 @@ def apply_textures(img, labels):
         region[~mask] = 0
         orig = img.astype(np.float32)
 
-        if zone == 0:   # right forest/clouds → TV glitch (direct)
-            glitched = tex_glitch_rgb(img)
-            out[mask] = glitched.astype(np.float32)[mask]
+        if zone == 0:   # right forest/clouds → halftone dots (swapped from green)
+            tex = tex_halftone(h, w, spacing=13, radius_frac=0.4)
+            out[mask] = (orig * tex)[mask]
 
         elif zone == 1: # sky → scanlines
             tex = tex_scanlines(h, w, line_gap=3, dim=0.2)
             out[mask] = (orig * tex)[mask]
 
-        elif zone == 2: # left forest → halftone dots
-            tex = tex_halftone(h, w, spacing=13, radius_frac=0.4)
-            out[mask] = (orig * tex)[mask]
-
-        elif zone == 3: # foreground rocks → TV static noise
+        elif zone == 2: # left forest → TV static noise (swapped from red)
             np.random.seed(42)
             tex = tex_tv_static(h, w, base_noise=0.6, glitch_frac=0.08)
             out[mask] = (orig * tex)[mask]
+
+        elif zone == 3: # foreground rocks → TV glitch (swapped from red)
+            glitched = tex_glitch_rgb(img)
+            out[mask] = glitched.astype(np.float32)[mask]
 
         elif zone == 4: # waterfall/mist → concentric ripple rings
             # centre rings on approximate waterfall position
