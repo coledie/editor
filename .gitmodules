@@ -1,0 +1,3 @@
+[submodule "LLMComputerVision"]
+	path = LLMComputerVision
+	url = https://github.com/coledie/LLMComputerVision.git
